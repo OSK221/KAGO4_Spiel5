@@ -139,11 +139,6 @@ public class Maze {
     }
 
     private static void area05(Tilemap tm){
-        for (int i = 0; i < 19; i++) {
-            for (int j = 0; j < 13; j++) {
-                tm.add(new GroundTile(i,j-14));
-            }
-        }
         for (int i = 0; i < 20; i++) {
             tm.add(new TreeTile(i,-15));
             tm.add(new TreeTile(i,-1));
@@ -154,6 +149,42 @@ public class Maze {
         }
         for (int i = 0; i < 5; i++) {
             tm.add(new GroundTile(19,i-10));
+        }
+        for (int i = 0; i < 13; i++) {
+            tm.add(new GroundTile(0,i-14));
+        }
+        for (int i = 0; i < 4; i++) {
+            tm.add(new TreeTile(4+i,4-15));
+            tm.add(new TreeTile(4+i,9-15));
+            tm.add(new TreeTile(-8+i+20,4-15));
+            tm.add(new TreeTile(-8+i+20,9-15));
+            tm.add(new TreeTile(-16+i+20,5-15));
+            tm.add(new TreeTile(-16+i+20,10-15));
+            tm.add(new TreeTile(-8+i+20,5-15));
+            tm.add(new TreeTile(-8+i+20,10-15));
+        }
+        for (int i = 0; i < 18; i++) {
+            for (int j = 0; j < 3; j++) {
+                tm.add(new GroundTile(i - 19+20, 1+j-15));
+                tm.add(new GroundTile(i - 19+20, 11+j-15));
+            }
+        }
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 7; j++) {
+                tm.add(new GroundTile(i - 19+20, 4+j-15));
+                tm.add(new GroundTile(i - 4+20, 4+j-15));
+            }
+        }
+        for (int i = 0; i < 4; i++) {
+            for (int j = 0; j < 7; j++) {
+                tm.add(new GroundTile(i - 12+20, 4+j-15));
+            }
+        }
+        for (int i = 0; i < 4; i++) {
+            for (int j = 0; j < 3; j++) {
+                tm.add(new GroundTile(i - 16+20, 6+j-15));
+                tm.add(new GroundTile(i - 8+20, 6+j-15));
+            }
         }
     }
 
