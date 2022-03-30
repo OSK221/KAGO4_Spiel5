@@ -89,7 +89,6 @@ public class ViewController implements ActionListener, KeyListener, MouseListene
      */
     private void startProgram(){
         programController = new ProgramController(this);
-        programController.startProgram();
         // Starte nebenlaeufigen Prozess, der Zeichnen und Animation uebernimmt
         lastLoop = System.nanoTime();
         gameProcess = new Timer(dt, this);
@@ -123,6 +122,7 @@ public class ViewController implements ActionListener, KeyListener, MouseListene
         // Erzeuge ein neues Fenster zum Zeichnen
         drawFrame = new DrawFrame(my_project.Config.WINDOW_TITLE, x, y, my_project.Config.WINDOW_WIDTH, my_project.Config.WINDOW_HEIGHT, scenes.get(0).drawingPanel);
         drawFrame.setResizable(false);
+        drawFrame.setBackground(Color.WHITE);
         showScene(0);
         // Übergibt den weiteren Programmfluss an das neue Objekt der Klasse ViewController
         if ( Config.INFO_MESSAGES) System.out.println("  > ViewController: Fenster eingerichtet. Startszene (Index: 0) angelegt.");
@@ -267,8 +267,6 @@ public class ViewController implements ActionListener, KeyListener, MouseListene
         int dt = (int) ((elapsedTime / 1000000L));
         double dtSeconds = (double)dt/1000;
         if ( dtSeconds == 0 ) dtSeconds = 0.01;
-        // Führe Berechnungen und Aktualisierungen im Hauptobjekt aus
-        programController.updateProgram(dtSeconds);
         // Zeichne alle Objekte der aktuellen Szene
         scenes.get(currentScene).drawingPanel.repaint();
         // Aktualisiere SoundController, wenn vorhanden

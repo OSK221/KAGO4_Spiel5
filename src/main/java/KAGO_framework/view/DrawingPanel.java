@@ -45,6 +45,12 @@ public class DrawingPanel extends JPanel  {
         }
         super.paintComponent(g);
         Graphics2D g2d = (Graphics2D) g;
+
+        double widthF = Toolkit.getDefaultToolkit().getScreenSize().width;
+        double heightF = Toolkit.getDefaultToolkit().getScreenSize().height;
+        g2d.scale(heightF/900,heightF/900);
+        g2d.translate((widthF-((heightF/900)*1200))/2/(heightF/900),0);
+
         drawTool.setGraphics2D(g2d,this);
         viewController.drawAndUpdateObjects(drawTool);
     }

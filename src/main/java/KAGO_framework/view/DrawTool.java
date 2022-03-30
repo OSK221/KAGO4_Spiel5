@@ -5,29 +5,46 @@ import java.awt.*;
 import java.awt.geom.*;
 import java.awt.image.BufferedImage;
 
-/**
- * Diese Klasse dient als vereinfachte Schnittstelle zum Zeichnen. Es handelt sich um eine BlackBox fuer die
- * Graphics2D-Klasse.
- * Vorgegebene Klasse des Frameworks. Modifikation auf eigene Gefahr.
- */
 public class DrawTool {
 
-    // Referenzen
-    private Graphics2D graphics2D; //java-spezifisches Objekt zum Arbeiten mit 2D-Grafik
+    private double cameraX, cameraY;
+
+    private Graphics2D graphics2D;
     private JComponent parent;
 
     /**
-     * Zeichnet ein Objekt der Klasse BufferedImage
+     * Bewegt das gezeichnete Bild.
+     * Alles was vor dem Aufruf gezeichnet wurde wird nicht bewegt!
+     * Ellipse- und Arc-Methoden werden nicht unterstützt!
+     * @param x Die x-Koordinaten verschiebung
+     * @param y Die y-Koordinaten verschiebung
+     */
+    public void translate(double x, double y){
+        cameraX = x;
+        cameraY = y;
+    }
+
+    public double getTransformX() {
+        return cameraX;
+    }
+
+    public double getTransformY() {
+        return cameraY;
+    }
+
+    /**
+     * Zeichnet ein Objekt der Klasse BufferedImage.
      * @param bI Das zu zeichnende Objekt
      * @param x Die x-Koordinate der oberen linken Ecke
      * @param y Die y-Koordinate der oberen linken Ecke
      */
     public void drawImage(BufferedImage bI, double x, double y){
-        if (graphics2D!= null) graphics2D.drawImage(bI, (int)x, (int)y, null);
+        if (graphics2D!= null) graphics2D.drawImage(bI, (int)(x+cameraX), (int)(y+cameraY), null);
     }
 
     /**
      * Zeichnet ein Objekt der Klasse BufferedImage.
+     * Wird nicht von drawtool.translate unterstützt!
      * @param bI das BufferedImage, das gezeichnet wird
      * @param x x-Koordinate der oberen linken Ecke
      * @param y y-Koordinate der oberen linken Ecke
@@ -38,7 +55,7 @@ public class DrawTool {
         if (graphics2D!= null){
             AffineTransform transform = new AffineTransform();
 
-            transform.translate(x,y);
+            transform.translate(x+cameraX,y+cameraY);
             if(scale > 0) {
                 transform.scale(scale,scale);
                 if(scale < 1){
@@ -71,20 +88,8 @@ public class DrawTool {
      * @param height Die Hoehe
      */
     public void drawRectangle(double x, double y, double width, double height){
-        Rectangle2D.Double r = new Rectangle2D.Double(x,y,width,height);
+        Rectangle2D.Double r = new Rectangle2D.Double(x+cameraX,y+cameraY,width,height);
         if (graphics2D!= null) graphics2D.draw(r);
-    }
-
-    /**
-     * Zeichnet ein Quadrat als Linie ohne Fuellung
-     * Credit: Nils Derenthal
-     * @param x Die x-Koordinate der oberen linken Ecke
-     * @param y Die y-Koordinate der oberen linken Ecke
-     * @param sideLength die Länge einer Seite des Quadrats
-     */
-    public void drawRectangle(double x, double y, double sideLength){
-        drawRectangle(x,y,sideLength,sideLength);
-
     }
 
     /**
@@ -95,7 +100,7 @@ public class DrawTool {
      * @param height Die Hoehe
      */
     public void drawFilledRectangle(double x, double y, double width, double height){
-        Rectangle2D.Double r = new Rectangle2D.Double(x,y,width,height);
+        Rectangle2D.Double r = new Rectangle2D.Double(x+cameraX,y+cameraY,width,height);
         if (graphics2D!= null) graphics2D.fill(r);
     }
 
@@ -142,7 +147,7 @@ public class DrawTool {
      * @param radius Der Kreisradius
      */
     public void drawCircle(double x, double y, double radius){
-        Ellipse2D.Double e = new Ellipse2D.Double(x-radius,y-radius,radius*2,radius*2);
+        Ellipse2D.Double e = new Ellipse2D.Double(x-radius+cameraX,y-radius+cameraY,radius*2,radius*2);
         if (graphics2D!= null) graphics2D.draw(e);
     }
 
@@ -153,39 +158,13 @@ public class DrawTool {
      * @param radius Der Kreisradius
      */
     public void drawFilledCircle(double x, double y, double radius){
-        Ellipse2D.Double e = new Ellipse2D.Double(x-radius,y-radius,radius*2,radius*2);
+        Ellipse2D.Double e = new Ellipse2D.Double(x-radius+cameraX,y-radius+cameraY,radius*2,radius*2);
         if (graphics2D!= null) graphics2D.fill(e);
     }
 
     /**
-     * Zeichnet ein nicht gefuelltes Dreieck
-     * @param x1 Die x-Koordinate der ersten Ecke
-     * @param y1 Die y-Koordinate der ersten Ecke
-     * @param x2 Die x-Koordinate der zweiten Ecke
-     * @param y2 Die y-Koordinate der zweiten Ecke
-     * @param x3 Die x-Koordinate der dritten Ecke
-     * @param y3 Die y-Koordinate der dritten Ecke
-     */
-    public void drawTriangle(double x1, double y1, double x2, double y2, double x3, double y3 ){
-        drawPolygon(x1,y1,x2,y2,x3,y3);
-    }
-
-    /**
-     * Zeichnet ein gefuelltes Dreieck
-     * @param x1 Die x-Koordinate der ersten Ecke
-     * @param y1 Die y-Koordinate der ersten Ecke
-     * @param x2 Die x-Koordinate der zweiten Ecke
-     * @param y2 Die y-Koordinate der zweiten Ecke
-     * @param x3 Die x-Koordinate der dritten Ecke
-     * @param y3 Die y-Koordinate der dritten Ecke
-     */
-    public void drawFilledTriangle(double x1, double y1, double x2, double y2, double x3, double y3 ){
-        drawFilledPolygon(x1,y1,x2,y2,x3,y3);
-    }
-
-    /**
-     * Zeichnet ein Polygon mit beliebig vielen Eckpunkten (Mehr als 3).
-     * @param eckpunkte eine gerade anzahl an Ecken des Polygons. Diese folgen dem Schema: [[x1], [y1], [x2], [y2], [x1]] etc.
+     * Zeichnet ein Polygon mit beliebig vielen Eckpunkten (Mehr als 2).
+     * @param eckpunkte eine gerade anzahl an Ecken des Polygons. Diese folgen dem Schema: [[x1], [y1], [x2], [y2], [x3]] etc.
      * @author Nils Derenthal
      */
     public void drawPolygon (double ... eckpunkte) {
@@ -193,8 +172,8 @@ public class DrawTool {
     }
 
     /**
-     * Zeichnet ein gefülltes Polygon mit beliebig vielen Eckpunkten (Mehr als 3).
-     * @param eckpunkte eine gerade anzahl an Ecken des Polygons. Diese folgen dem Schema: [[x1], [y1], [x2], [y2], [x1]] etc.
+     * Zeichnet ein gefülltes Polygon mit beliebig vielen Eckpunkten (Mehr als 2).
+     * @param eckpunkte eine gerade anzahl an Ecken des Polygons. Diese folgen dem Schema: [[x1], [y1], [x2], [y2], [x3]] etc.
      * @author Nils Derenthal
      */
     public void drawFilledPolygon (double ... eckpunkte) {
@@ -203,7 +182,7 @@ public class DrawTool {
 
     /**
      * Helper funktion für doppelten Code-block um ein Polygon aus einem Array von Ecken zu erzeugen.
-     * @param eckPunkte eine gerade anzahl an Ecken des Polygons. Diese folgen dem Schema: [[x1], [y1], [x2], [y2], [x1]] etc.
+     * @param eckPunkte eine gerade anzahl an Ecken des Polygons. Diese folgen dem Schema: [[x1], [y1], [x2], [y2], [x3]] etc.
      * @return das durch die Eckpunkte geschaffene Polygon
      * @author Nils Derenthal
      */
@@ -215,7 +194,7 @@ public class DrawTool {
         Polygon p = new Polygon();
 
         for (int i = 0; i < eckPunkte.length - 1; i += 2) {
-            p.addPoint ((int)eckPunkte[i], (int) eckPunkte[i + 1]);
+            p.addPoint ((int)(eckPunkte[i] + cameraX), (int)(eckPunkte[i + 1] + cameraY));
         }
         return p;
     }
@@ -228,7 +207,7 @@ public class DrawTool {
      * @param y2 Die y-Koordinate des zweiten Punkts
      */
     public void drawLine(double x1, double y1, double x2, double y2){
-        Line2D.Double line = new Line2D.Double(x1,y1,x2,y2);
+        Line2D.Double line = new Line2D.Double(x1+cameraX,y1+cameraY,x2+cameraX,y2+cameraY);
         if (graphics2D!= null) graphics2D.draw(line);
     }
 
@@ -335,7 +314,7 @@ public class DrawTool {
      * @param text Der anzuzeigende Text
      */
     public void drawText(double x, double y, String text){
-        if (graphics2D!=null) graphics2D.drawString(text,(int)x,(int)y);
+        if (graphics2D!=null) graphics2D.drawString(text,(int)(x+cameraX),(int)(y+cameraY));
     }
 
     /**
