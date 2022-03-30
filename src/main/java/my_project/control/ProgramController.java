@@ -21,11 +21,11 @@ public class ProgramController {
     public ProgramController(ViewController viewController){
         tilemap = new Tilemap();
         viewController.draw(tilemap);
-        player = new Player(600,450);
+        player = new Player(300,450);
         viewController.draw(player);
         inputManager = new InputManager(this,player);
         viewController.register(inputManager);
-        eb = new EnemyBase(1,"1",1,1,1,1,player);
+        eb = new EnemyBase(1,"1",1200,600,1,1,player);
         viewController.draw(eb);
         viewController.draw(new Background());
         this.viewController = viewController;

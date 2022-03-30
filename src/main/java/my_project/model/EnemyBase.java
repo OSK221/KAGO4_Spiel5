@@ -40,14 +40,14 @@ public class EnemyBase extends InteractiveGraphicalObject{
 
         double dist = Math.hypot(dx, dy);
 
-        dx = dx / dist;
-        dy = dy / dist;
-
-        x += dx * dt * 100;
-        y += dy * dt * 100;
-
         if(dist < 2.5){
             //Hitttt
+        }else{
+            dx = dx / dist;
+            dy = dy / dist;
+
+            x += dx * dt * 100;
+            y += dy * dt * 100;
         }
     }
 
