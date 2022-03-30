@@ -34,14 +34,21 @@ public class EnemyBase extends InteractiveGraphicalObject{
         follow(dt);
     }
 
-    public void follow(double dt) {
-        double distance = Math.hypot(x - player.getX(), y - player.getY());
-        double angle_radians = Math.atan2(y - player.getY(), x - player.getX());
+    public void follow(double dt){
+        double dx = player.getX() - x;
+        double dy = player.getY() - y;
 
-        x -= Math.cos(angle_radians) * dt * 100;
-        y -= Math.cos(angle_radians) * dt * 100;
+        double dist = Math.hypot(dx, dy);
 
-        if(distance < 1) System.out.println("HIHIHTIHTITHITHIT");
+        dx = dx / dist;
+        dy = dy / dist;
+
+        x += dx * dt * 100;
+        y += dy * dt * 100;
+
+        if(dist < 2.5){
+            //Hitttt
+        }
     }
 
     @Override
