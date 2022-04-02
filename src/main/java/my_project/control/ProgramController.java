@@ -2,7 +2,7 @@ package my_project.control;
 
 import KAGO_framework.control.ViewController;
 import my_project.model.Background;
-import my_project.model.EnemyBase;
+import my_project.model.enemy.Enemy;
 import my_project.model.Player;
 import my_project.model.maze.Tilemap;
 import my_project.view.InputManager;
@@ -16,7 +16,7 @@ public class ProgramController {
 
     private Tilemap tilemap;
 
-    private EnemyBase eb;
+    private Enemy e01;
 
     public ProgramController(ViewController viewController){
         tilemap = new Tilemap();
@@ -25,8 +25,8 @@ public class ProgramController {
         viewController.draw(player);
         inputManager = new InputManager(this,player);
         viewController.register(inputManager);
-        eb = new EnemyBase(1,"1",1200,600,1,1,player);
-        viewController.draw(eb);
+        e01 = new Enemy("Test-Enemy",1000,600,1,1,100,player, tilemap);
+        viewController.draw(e01);
         viewController.draw(new Background());
         this.viewController = viewController;
     }

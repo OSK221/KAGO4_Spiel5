@@ -5,6 +5,6 @@ import my_project.model.maze.TileBase;
 public class TreeTile extends TileBase {
 
     public TreeTile(double x, double y) {
-        super(x, y, "tree", "Tree.png");
+        super(x, y, "tree", "Tree.png", true);
     }
 }

@@ -1,53 +1,47 @@
-package my_project.model;
+package my_project.model.enemy;
 
 import KAGO_framework.model.GraphicalObject;
-import KAGO_framework.model.InteractiveGraphicalObject;
 import KAGO_framework.view.DrawTool;
-import my_project.control.ProgramController;
+import my_project.model.Player;
+import my_project.model.maze.Tilemap;
 
 import java.awt.*;
 
-/*public class EnemyBase extends GraphicalObject {
-    private int lives;
-    private
-}*/
-public class EnemyBase extends InteractiveGraphicalObject{
-    private int lives, strength, speed;
+public class Enemy extends GraphicalObject {
     private String name;
-    private double x,y;
+    private double x, y;
+    private int lives, strength, speed;
     private Player player;
 
-    private DrawTool drawTool;
+    private Tilemap tilemap;
 
-    public EnemyBase(int lives, String name, double x, double y, int strength, int speed, Player player){
-        this.lives = lives;
+    public Enemy(String name, double x, double y, int lives, int strength, int speed, Player player, Tilemap tilemap) {
         this.name = name;
         this.x = x;
         this.y = y;
+        this.lives = lives;
         this.strength = strength;
         this.speed = speed;
-        this.player=player;
+        this.player = player;
+        this.tilemap = tilemap;
     }
 
     @Override
     public void update(double dt){
-        follow(dt);
-    }
-
-    public void follow(double dt){
         double dx = player.getX() - x;
         double dy = player.getY() - y;
 
         double dist = Math.hypot(dx, dy);
 
         if(dist < 2.5){
-            //Hitttt
-        }else{
+            //Hit
+        }else {
             dx = dx / dist;
             dy = dy / dist;
 
-            x += dx * dt * 100;
-            y += dy * dt * 100;
+            if (tilemap.isAbleToMoveHorizontal(x,y,dx * dt * speed)) x += dx * dt * speed;
+            if (tilemap.isAbleToMoveVertical(x,y,dy * dt * speed)) y += dy * dt * speed;
+
         }
     }
 

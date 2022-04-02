@@ -17,7 +17,7 @@ public class Background extends GraphicalObject {
         drawTool.drawFilledRectangle(-desktop-drawTool.getTransformX(), - drawTool.getTransformY(), desktop, heightF);
         drawTool.drawFilledRectangle(1199 +desktop/2 - drawTool.getTransformX(), - drawTool.getTransformY(), desktop, heightF);
         for (int i = 0; i < desktop/2; i++) {
-                drawTool.setCurrentColor((int)((double)i/(double)desktop*100),(int)((double)i/(double)desktop*100),(int)((double)i/(double)desktop*100),255);
+                drawTool.setCurrentColor((int)((double)i/(double)desktop*150),(int)((double)i/(double)desktop*150),(int)((double)i/(double)desktop*150),255);
             drawTool.drawFilledRectangle(i-desktop/2-drawTool.getTransformX(), - drawTool.getTransformY(), 1, heightF);
             drawTool.drawFilledRectangle(1199 -i +desktop/2 - drawTool.getTransformX(), - drawTool.getTransformY(), 1, heightF);
         }

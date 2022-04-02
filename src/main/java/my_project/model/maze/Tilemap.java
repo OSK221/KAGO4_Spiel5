@@ -27,13 +27,6 @@ public class Tilemap extends GraphicalObject {
         }
     }
 
-    @Override
-    public void update(double dt){
-        for (int i = 0; i < allTiles.size(); i++) {
-            allTiles.get(i).update(dt);
-        }
-    }
-
     public void load(){
         boolean reload;
         do{
@@ -45,7 +38,7 @@ public class Tilemap extends GraphicalObject {
                             if (allTiles.get(i).getX() + allTiles.get(i).getWidth() == allTiles.get(j).getX() && allTiles.get(i).getY() == allTiles.get(j).getY()) {
                                 allTiles.get(i).setWidth(allTiles.get(i).getWidth()+allTiles.get(j).getWidth());
                                 reload = true;
-                                allTiles.remove(j);
+                                remove(j);
                             }
                         }
                     }
@@ -61,13 +54,26 @@ public class Tilemap extends GraphicalObject {
                             if (allTiles.get(i).getY() + allTiles.get(i).getHeight() == allTiles.get(j).getY() && allTiles.get(i).getX() == allTiles.get(j).getX()) {
                                 allTiles.get(i).setHeight(allTiles.get(i).getHeight()+allTiles.get(j).getHeight());
                                 reload = true;
-                                allTiles.remove(j);
+                                remove(j);
                             }
                         }
                     }
                 }
             }
         }while (reload);
+    }
+
+    public boolean isAbleToMoveHorizontal(double x, double y, double speed){
+        for (int i = 0; i < allTiles.size(); i++) {
+            if (allTiles.get(i).isCollider()){
+
+            }
+        }
+        return true;
+    }
+
+    public boolean isAbleToMoveVertical(double x, double y, double speed){
+        return true;
     }
 
     public void add(TileBase tileBase){

@@ -58,10 +58,10 @@ public class Maze {
             tm.add(new GraveTile(-16+i,9));
             tm.add(new GraveTile(-8+i,4));
             tm.add(new GraveTile(-8+i,9));
-            tm.add(new SandTile(-16+i,5));
-            tm.add(new SandTile(-16+i,10));
-            tm.add(new SandTile(-8+i,5));
-            tm.add(new SandTile(-8+i,10));
+            tm.add(new BlockTile(-16+i,5));
+            tm.add(new BlockTile(-16+i,10));
+            tm.add(new BlockTile(-8+i,5));
+            tm.add(new BlockTile(-8+i,10));
         }
         for (int i = 0; i < 18; i++) {
             for (int j = 0; j < 3; j++) {
