@@ -25,7 +25,7 @@ public class ProgramController {
         viewController.draw(player);
         inputManager = new InputManager(this,player);
         viewController.register(inputManager);
-        e01 = new Enemy("Test-Enemy",1000,600,1,1,100,player, tilemap);
+        e01 = new Enemy("Test-Enemy",1400,-200,1,1,100,player, tilemap);
         viewController.draw(e01);
         viewController.draw(new Background());
         this.viewController = viewController;

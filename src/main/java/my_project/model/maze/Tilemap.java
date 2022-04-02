@@ -66,13 +66,34 @@ public class Tilemap extends GraphicalObject {
     public boolean isAbleToMoveHorizontal(double x, double y, double speed){
         for (int i = 0; i < allTiles.size(); i++) {
             if (allTiles.get(i).isCollider()){
-
+                if (speed > 0){
+                    if (allTiles.get(i).getX()*60-30 < x && x < allTiles.get(i).getX()*60 && allTiles.get(i).getY()*60-15 < y && y < (allTiles.get(i).getY() + allTiles.get(i).getHeight())*60+15){
+                        return false;
+                    }
+                }else{
+                    if ((allTiles.get(i).getX() + allTiles.get(i).getWidth())*60 < x && x < (allTiles.get(i).getX() + allTiles.get(i).getWidth())*60+30 && allTiles.get(i).getY()*60-15 < y && y < (allTiles.get(i).getY() + allTiles.get(i).getHeight())*60+15){
+                        return false;
+                    }
+                }
             }
         }
         return true;
     }
 
     public boolean isAbleToMoveVertical(double x, double y, double speed){
+        for (int i = 0; i < allTiles.size(); i++) {
+            if (allTiles.get(i).isCollider()){
+                if (speed > 0){
+                    if (allTiles.get(i).getX()*60-15 < x && x < (allTiles.get(i).getX() + allTiles.get(i).getWidth())*60+15 && allTiles.get(i).getY()*60-30 < y && y < allTiles.get(i).getY()*60){
+                        return false;
+                    }
+                }else{
+                    if (allTiles.get(i).getX()*60-15 < x && x < (allTiles.get(i).getX() + allTiles.get(i).getWidth())*60+15 && (allTiles.get(i).getY() + allTiles.get(i).getHeight())*60 < y && y < (allTiles.get(i).getY() + allTiles.get(i).getHeight())*60+30){
+                        return false;
+                    }
+                }
+            }
+        }
         return true;
     }
 
