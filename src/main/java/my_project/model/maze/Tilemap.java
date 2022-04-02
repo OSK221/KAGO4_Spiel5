@@ -1,5 +1,6 @@
 package my_project.model.maze;
 
+import KAGO_framework.control.ViewController;
 import KAGO_framework.model.GraphicalObject;
 import KAGO_framework.view.DrawTool;
 
@@ -61,6 +62,18 @@ public class Tilemap extends GraphicalObject {
                 }
             }
         }while (reload);
+    }
+
+    public void generateGrass(ViewController viewController){
+        for (int i = 0; i < allTiles.size(); i++) {
+            if (allTiles.get(i).getTyp() == "ground"){
+                for (int j = 0; j < allTiles.get(i).getWidth(); j++) {
+                    for (int k = 0; k < allTiles.get(i).getHeight(); k++) {
+                        viewController.draw(new Grass((allTiles.get(i).getX()+j)*60+Math.random()*40,(allTiles.get(i).getY()+k)*60+Math.random()*40));
+                    }
+                }
+            }
+        }
     }
 
     public boolean isAbleToMoveHorizontal(double x, double y, double speed){

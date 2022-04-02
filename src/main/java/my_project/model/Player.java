@@ -8,6 +8,8 @@ import java.awt.event.KeyEvent;
 
 public class Player extends InteractiveGraphicalObject {
 
+    private double dtf;
+
     private boolean load;
     private DrawTool drawTool;
 
@@ -39,7 +41,8 @@ public class Player extends InteractiveGraphicalObject {
     @Override
     public void draw(DrawTool drawTool) {
         drawTool.setCurrentColor(Color.RED);
-        drawTool.drawFilledRectangle(x - 30, y - 30, 60, 60);
+        drawTool.drawFilledCircle(x, y, 30);
+        drawTool.drawText(x-30,y-30,"" + dtf);
         if (!load) {
             this.drawTool = drawTool;
         }
@@ -47,6 +50,7 @@ public class Player extends InteractiveGraphicalObject {
 
     @Override
     public void update(double dt) {
+        dtf = dt;
         if (direction==0) {
             x = x + speed*dt;
             if (x >= 1000 - width) {

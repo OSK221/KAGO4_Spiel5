@@ -21,6 +21,7 @@ public class ProgramController {
     public ProgramController(ViewController viewController){
         tilemap = new Tilemap();
         viewController.draw(tilemap);
+        tilemap.generateGrass(viewController);
         player = new Player(300,450);
         viewController.draw(player);
         inputManager = new InputManager(this,player);

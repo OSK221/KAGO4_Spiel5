@@ -8,6 +8,7 @@ import my_project.model.maze.Tilemap;
 import java.awt.*;
 
 public class Enemy extends GraphicalObject {
+
     private String name;
     private double x, y;
     private int lives, strength, speed;
@@ -33,22 +34,23 @@ public class Enemy extends GraphicalObject {
 
         double dist = Math.hypot(dx, dy);
 
-        if(dist < 2.5){
+        if(dist < 55){
             //Hit
         }else {
-            dx = dx / dist;
-            dy = dy / dist;
+            if (dist < 600) {
+                dx = dx / dist;
+                dy = dy / dist;
 
-            if (tilemap.isAbleToMoveHorizontal(x,y,dx * dt * speed)) x += dx * dt * speed;
-            if (tilemap.isAbleToMoveVertical(x,y,dy * dt * speed)) y += dy * dt * speed;
-
+                if (tilemap.isAbleToMoveHorizontal(x, y, dx * dt * speed)) x += dx * dt * speed;
+                if (tilemap.isAbleToMoveVertical(x, y, dy * dt * speed)) y += dy * dt * speed;
+            }
         }
     }
 
     @Override
     public void draw(DrawTool drawTool) {
         drawTool.setCurrentColor(Color.BLUE);
-        drawTool.drawFilledRectangle(x - 30, y - 30, 60, 60);
+        drawTool.drawFilledCircle(x, y, 30);
     }
 
 }
