@@ -16,7 +16,9 @@ public class Player extends InteractiveGraphicalObject {
     private double speed;
     private int keyToGoLeft;
     private int keyToGoRight;
-    private int direction;
+    private int keyToGoUp;
+    private int keyToGoDown;
+    private char direction;
     private double damage;
     private int level;
     private int enemyTillNextLevel;
@@ -35,7 +37,9 @@ public class Player extends InteractiveGraphicalObject {
 
         this.keyToGoLeft = KeyEvent.VK_A;
         this.keyToGoRight = KeyEvent.VK_D;
-        this.direction = -1;
+        this.keyToGoUp = KeyEvent.VK_W;
+        this.keyToGoDown = KeyEvent.VK_S;
+        this.direction = 'n';
     }
 
     @Override
@@ -51,46 +55,39 @@ public class Player extends InteractiveGraphicalObject {
     @Override
     public void update(double dt) {
         dtf = dt;
-        if (direction==0) {
+        if (direction == 'd') {
             x = x + speed*dt;
-            if (x >= 1000 - width) {
-                x = 1000-width;
-            }
-        } else if (direction == 2) {
-            x = x-speed*dt;
-            if (x<=0) {
-                x = 0;
-            }
+            if (x >= 1200 - width) { x = 1200-width; }
+        } else if (direction == 'a') {
+            x = x - speed*dt;
+            if (x <= -1200) { x = -1200; }
+        } else if (direction == 's') {
+            y = y + speed*dt;
+            if (y <= -900) { y = -900; }
+        } else if (direction == 'w') {
+            y = y - speed*dt;
+            if (y >= 900) { y = 900; }
+        }
+    }
+
+    @Override
+    public void keyPressed(int key) {
+        if(key == keyToGoLeft){ direction = 'a'; }
+        if(key == keyToGoRight){ direction = 'd'; }
+        if(key == keyToGoDown) { direction = 's'; }
+        if(key == keyToGoUp) { direction ='w'; }
+    }
+
+    @Override
+    public void keyReleased(int key) {
+        if(key == keyToGoLeft || key == keyToGoRight || key == keyToGoDown || key == keyToGoUp){
+            direction = 'n';
         }
     }
 
     public DrawTool getDrawTool() {
         if (!(drawTool == null)) load = true;
         return drawTool;
-    }
-
-    public void hit() {
-
-    }
-
-    @Override
-    public void keyPressed(int key) {
-        if(key == keyToGoLeft){
-            direction = 2;
-        }
-        if(key == keyToGoRight){
-            direction = 0;
-        }
-    }
-
-    @Override
-    public void keyReleased(int key) {
-        if(key == keyToGoLeft){
-            direction = -1;
-        }
-        if(key == keyToGoRight){
-            direction = -1;
-        }
     }
 
     public double getX() { return x; }
@@ -101,3 +98,6 @@ public class Player extends InteractiveGraphicalObject {
     public void setY(double newY) { y = newY; }
     public void setSpeed(double newSpeed) { speed = newSpeed; }
 }
+
+//die boarders, damit der spieler nicht über jeden scheiss laufen kann
+//alle Methoden die mit Kampf zu tun haben: Geld, Damage, Hp, etc.

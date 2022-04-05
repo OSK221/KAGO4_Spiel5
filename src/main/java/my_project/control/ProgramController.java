@@ -24,6 +24,7 @@ public class ProgramController {
         tilemap.generateGrass(viewController);
         player = new Player(300,450);
         viewController.draw(player);
+        viewController.register(player);
         inputManager = new InputManager(this,player);
         viewController.register(inputManager);
         e01 = new Enemy("Test-Enemy",1400,-200,1,1,100,player, tilemap);
