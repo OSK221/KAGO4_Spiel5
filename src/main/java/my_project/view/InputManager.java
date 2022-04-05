@@ -23,7 +23,7 @@ public class InputManager extends InteractiveGraphicalObject {
 
     @Override
     public void keyPressed(int key) {
-        if(key == KeyEvent.VK_ESCAPE) System.exit(0);
+        if(key == KeyEvent.VK_ESCAPE || key == KeyEvent.VK_Q || key == KeyEvent.VK_TAB) System.exit(0);
         if (!(drawTool==null)) {
             switch (key) {
                 case KeyEvent.VK_UP:
