@@ -13,10 +13,11 @@ public class Enemy extends GraphicalObject {
     private double x, y;
     private int lives, strength, speed;
     private Player player;
+    private Color color;
 
     private Tilemap tilemap;
 
-    public Enemy(String name, double x, double y, int lives, int strength, int speed, Player player, Tilemap tilemap) {
+    public Enemy(String name, double x, double y, int lives, int strength, int speed, Player player, Tilemap tilemap, Color color) {
         this.name = name;
         this.x = x;
         this.y = y;
@@ -25,6 +26,7 @@ public class Enemy extends GraphicalObject {
         this.speed = speed;
         this.player = player;
         this.tilemap = tilemap;
+        this.color = color;
     }
 
     @Override
@@ -37,7 +39,7 @@ public class Enemy extends GraphicalObject {
         if(dist < 55){
             //Hit
         }else {
-            if (dist < 600) {
+            if (true) {
                 dx = dx / dist;
                 dy = dy / dist;
 
@@ -49,7 +51,7 @@ public class Enemy extends GraphicalObject {
 
     @Override
     public void draw(DrawTool drawTool) {
-        drawTool.setCurrentColor(Color.BLUE);
+        drawTool.setCurrentColor(color);
         drawTool.drawFilledCircle(x, y, 30);
     }
 

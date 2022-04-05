@@ -7,6 +7,8 @@ import my_project.model.Player;
 import my_project.model.maze.Tilemap;
 import my_project.view.InputManager;
 
+import java.awt.*;
+
 public class ProgramController {
 
     private ViewController viewController;
@@ -26,7 +28,7 @@ public class ProgramController {
         viewController.draw(player);
         inputManager = new InputManager(this,player);
         viewController.register(inputManager);
-        e01 = new Enemy("Test-Enemy",1400,-200,1,1,100,player, tilemap);
+        e01 = new Enemy("Test-Enemy",1400,-200,1,1,100,player, tilemap, Color.BLACK);
         viewController.draw(e01);
         viewController.draw(new Background());
         this.viewController = viewController;
