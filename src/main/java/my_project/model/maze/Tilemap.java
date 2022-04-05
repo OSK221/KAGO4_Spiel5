@@ -12,13 +12,7 @@ public class Tilemap extends GraphicalObject {
 
     public Tilemap(){
         allTiles = new ArrayList<>();
-        Maze.area(this,1);
-        Maze.area(this,2);
-        Maze.area(this,3);
-        Maze.area(this,4);
-        Maze.area(this,5);
-        Maze.area(this,6);
-        load();
+        Maze.area(this);
     }
 
     @Override
