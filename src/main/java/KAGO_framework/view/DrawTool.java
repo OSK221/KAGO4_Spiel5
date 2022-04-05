@@ -20,6 +20,16 @@ public class DrawTool {
      * @param y Die y-Koordinaten verschiebung
      */
     public void translate(double x, double y){
+        if (x > 1200){
+            x = 1200;
+        }else if (x < -1200) {
+            x = -1200;
+        }
+        if (y > 900){
+            y = 900;
+        }else if (y < 0) {
+            y = 0;
+        }
         cameraX = x;
         cameraY = y;
     }

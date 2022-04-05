@@ -27,16 +27,16 @@ public class InputManager extends InteractiveGraphicalObject {
         if (!(drawTool==null)) {
             switch (key) {
                 case KeyEvent.VK_UP:
-                    if (drawTool.getTransformY() < 900) drawTool.translate(drawTool.getTransformX(), drawTool.getTransformY() + 60);
+                    drawTool.translate(drawTool.getTransformX(), drawTool.getTransformY() + 60);
                     break;
                 case KeyEvent.VK_DOWN:
-                    if (drawTool.getTransformY() > 0) drawTool.translate(drawTool.getTransformX(), drawTool.getTransformY() - 60);
+                    drawTool.translate(drawTool.getTransformX(), drawTool.getTransformY() - 60);
                     break;
                 case KeyEvent.VK_LEFT:
-                    if (drawTool.getTransformX() < 1200) drawTool.translate(drawTool.getTransformX() + 60, drawTool.getTransformY());
+                    drawTool.translate(drawTool.getTransformX() + 60, drawTool.getTransformY());
                     break;
                 case KeyEvent.VK_RIGHT:
-                    if (drawTool.getTransformX() > -1200) drawTool.translate(drawTool.getTransformX() - 60, drawTool.getTransformY());
+                    drawTool.translate(drawTool.getTransformX() - 60, drawTool.getTransformY());
                     break;
             }
         }else{
