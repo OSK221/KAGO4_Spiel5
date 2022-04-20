@@ -10,12 +10,11 @@ import java.io.IOException;
 
 public class TileBase {
 
-    private boolean collider;
-
     protected double x, y;
     protected double width = 1, height = 1;
 
-    private String typ;
+    private final boolean collider;
+    private final String typ;
 
     private int r, g, b;
     private BufferedImage myImage;
@@ -31,9 +30,11 @@ public class TileBase {
             myImage = ImageIO.read(new File(pathToImage));
         } catch (IOException e01) {
             if (Config.INFO_MESSAGES) System.out.println("Error while loading: src/main/resources/graphic/" + pathToImage);
+            System.out.println(e01.getMessage());
             try {
                 myImage = ImageIO.read(new File("src/main/resources/graphic/Error.png"));
             } catch (IOException e02) {
+                if (Config.INFO_MESSAGES) System.out.println("Error while loading other important files -> Now ending process (No Textures found)");
                 System.exit(1);
             }
         }

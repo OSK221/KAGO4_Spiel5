@@ -11,20 +11,20 @@ import java.awt.*;
 
 public class ProgramController {
 
-    private ViewController viewController;
-    private InputManager inputManager;
+    private final ViewController viewController;
+    private final InputManager inputManager;
 
-    public Player player;
+    private final Player player;
 
-    private Tilemap tilemap;
+    private final Tilemap tilemap;
 
-    private Enemy e01;
+    private final Enemy e01;
 
     public ProgramController(ViewController viewController){
         tilemap = new Tilemap();
         viewController.draw(tilemap);
         tilemap.generateGrass(viewController);
-        player = new Player(300,450);
+        player = new Player(300,450,tilemap);
         viewController.draw(player);
         viewController.register(player);
         inputManager = new InputManager(this,player);

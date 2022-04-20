@@ -200,7 +200,5 @@ public class Maze {
         for (int i = 0; i < 13; i++) {
             tm.add(new GroundTile(-1,i-14));
         }
-        tm.load();
-        tm.load();
     }
 }

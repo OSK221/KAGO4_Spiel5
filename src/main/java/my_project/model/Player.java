@@ -2,6 +2,7 @@ package my_project.model;
 
 import KAGO_framework.model.InteractiveGraphicalObject;
 import KAGO_framework.view.DrawTool;
+import my_project.model.maze.Tilemap;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -13,11 +14,9 @@ public class Player extends InteractiveGraphicalObject {
     private boolean load;
     private DrawTool drawTool;
 
+    private final Tilemap tilemap;
+
     private double speed;
-    private int keyToGoLeft;
-    private int keyToGoRight;
-    private int keyToGoUp;
-    private int keyToGoDown;
     private char direction;
     private double damage;
     private int level;
@@ -27,13 +26,20 @@ public class Player extends InteractiveGraphicalObject {
     private int money;
     private double animationTimer;
 
-    public Player(double x, double y) {
+    private final int keyToGoLeft;
+    private final int keyToGoRight;
+    private final int keyToGoUp;
+    private final int keyToGoDown;
+
+    public Player(double x, double y, Tilemap tilemap) {
         this.x = x;
         this.y = y;
         load = false;
-        speed = 450;
+        speed = 200;
         width = 60;
         height = 60;
+
+        this.tilemap = tilemap;
 
         this.keyToGoLeft = KeyEvent.VK_A;
         this.keyToGoRight = KeyEvent.VK_D;
@@ -56,17 +62,17 @@ public class Player extends InteractiveGraphicalObject {
     public void update(double dt) {
         dtf = dt;
         if (direction == 'd') {
-            x = x + speed*dt;
-            if (x >= 1200 - width) { x = 1200-width; }
+            if (tilemap.isAbleToMoveHorizontal(x, y, 1)) x = x + speed*dt;
+            if (x >= 2400 - width) x = 2400-width;
         } else if (direction == 'a') {
-            x = x - speed*dt;
-            if (x <= -1200) { x = -1200; }
+            if (tilemap.isAbleToMoveHorizontal(x, y, -1)) x = x - speed*dt;
+            if (x <= -1200) x = -1200;
         } else if (direction == 's') {
-            y = y + speed*dt;
-            if (y <= -900) { y = -900; }
+            if (tilemap.isAbleToMoveVertical(x, y, 1)) y = y + speed*dt;
+            if (y >= 900) y = 900;
         } else if (direction == 'w') {
-            y = y - speed*dt;
-            if (y >= 900) { y = 900; }
+            if (tilemap.isAbleToMoveVertical(x, y, -1)) y = y - speed*dt;
+            if (y <= -900) y = -900;
         }
     }
 
@@ -99,5 +105,4 @@ public class Player extends InteractiveGraphicalObject {
     public void setSpeed(double newSpeed) { speed = newSpeed; }
 }
 
-//die boarders, damit der spieler nicht über jeden scheiss laufen kann
 //alle Methoden die mit Kampf zu tun haben: Geld, Damage, Hp, etc.

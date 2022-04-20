@@ -8,28 +8,29 @@ import java.util.ArrayList;
 
 public class Tilemap extends GraphicalObject {
 
-    private ArrayList<TileBase> allTiles;
+    private final ArrayList<TileBase> allTiles;
 
     public Tilemap(){
         allTiles = new ArrayList<>();
         Maze.area(this);
+        load();
     }
 
     @Override
     public void draw(DrawTool drawTool){
-        for (int i = 0; i < allTiles.size(); i++) {
-            allTiles.get(i).draw(drawTool);
+        for (TileBase tile : allTiles) {
+            tile.draw(drawTool);
         }
     }
 
-    public void load(){
+    private void load(){
         boolean reload;
         do{
             reload = false;
             for (int i = 0; i < allTiles.size(); i++) {
                 for (int j = 0; j < allTiles.size(); j++) {
                     if (!reload) {
-                        if (allTiles.get(i).getTyp() == allTiles.get(j).getTyp() & allTiles.get(i).getHeight() == allTiles.get(j).getHeight()) {
+                        if (allTiles.get(i).getTyp().equals(allTiles.get(j).getTyp()) & allTiles.get(i).getHeight() == allTiles.get(j).getHeight()) {
                             if (allTiles.get(i).getX() + allTiles.get(i).getWidth() == allTiles.get(j).getX() && allTiles.get(i).getY() == allTiles.get(j).getY()) {
                                 allTiles.get(i).setWidth(allTiles.get(i).getWidth()+allTiles.get(j).getWidth());
                                 reload = true;
@@ -45,7 +46,7 @@ public class Tilemap extends GraphicalObject {
             for (int i = 0; i < allTiles.size(); i++) {
                 for (int j = 0; j < allTiles.size(); j++) {
                     if (!reload) {
-                        if (allTiles.get(i).getTyp() == allTiles.get(j).getTyp() & allTiles.get(i).getWidth() == allTiles.get(j).getWidth()) {
+                        if (allTiles.get(i).getTyp().equals(allTiles.get(j).getTyp()) & allTiles.get(i).getWidth() == allTiles.get(j).getWidth()) {
                             if (allTiles.get(i).getY() + allTiles.get(i).getHeight() == allTiles.get(j).getY() && allTiles.get(i).getX() == allTiles.get(j).getX()) {
                                 allTiles.get(i).setHeight(allTiles.get(i).getHeight()+allTiles.get(j).getHeight());
                                 reload = true;
@@ -59,11 +60,11 @@ public class Tilemap extends GraphicalObject {
     }
 
     public void generateGrass(ViewController viewController){
-        for (int i = 0; i < allTiles.size(); i++) {
-            if (allTiles.get(i).getTyp() == "ground"){
-                for (int j = 0; j < allTiles.get(i).getWidth(); j++) {
-                    for (int k = 0; k < allTiles.get(i).getHeight(); k++) {
-                        viewController.draw(new Grass((allTiles.get(i).getX()+j)*60+Math.random()*40,(allTiles.get(i).getY()+k)*60+Math.random()*40));
+        for (TileBase tile : allTiles) {
+            if (tile.getTyp().equals("ground")) {
+                for (int i = 0; i < tile.getWidth(); i++) {
+                    for (int j = 0; j < tile.getHeight(); j++) {
+                        viewController.draw(new Grass((tile.getX() + i) * 60 + Math.random() * 38 + 1, (tile.getY() + j) * 60 + Math.random() * 43 + 1));
                     }
                 }
             }
@@ -71,14 +72,14 @@ public class Tilemap extends GraphicalObject {
     }
 
     public boolean isAbleToMoveHorizontal(double x, double y, double speed){
-        for (int i = 0; i < allTiles.size(); i++) {
-            if (allTiles.get(i).isCollider()){
-                if (speed > 0){
-                    if (allTiles.get(i).getX()*60-30 < x && x < allTiles.get(i).getX()*60 && allTiles.get(i).getY()*60-15 < y && y < (allTiles.get(i).getY() + allTiles.get(i).getHeight())*60+15){
+        for (TileBase tile : allTiles) {
+            if (tile.isCollider()) {
+                if (speed > 0) {
+                    if (tile.getX() * 60 - 30 < x && x < tile.getX() * 60 && tile.getY() * 60 - 15 < y && y < (tile.getY() + tile.getHeight()) * 60 + 15) {
                         return false;
                     }
-                }else{
-                    if ((allTiles.get(i).getX() + allTiles.get(i).getWidth())*60 < x && x < (allTiles.get(i).getX() + allTiles.get(i).getWidth())*60+30 && allTiles.get(i).getY()*60-15 < y && y < (allTiles.get(i).getY() + allTiles.get(i).getHeight())*60+15){
+                } else {
+                    if ((tile.getX() + tile.getWidth()) * 60 < x && x < (tile.getX() + tile.getWidth()) * 60 + 30 && tile.getY() * 60 - 15 < y && y < (tile.getY() + tile.getHeight()) * 60 + 15) {
                         return false;
                     }
                 }
@@ -88,14 +89,14 @@ public class Tilemap extends GraphicalObject {
     }
 
     public boolean isAbleToMoveVertical(double x, double y, double speed){
-        for (int i = 0; i < allTiles.size(); i++) {
-            if (allTiles.get(i).isCollider()){
-                if (speed > 0){
-                    if (allTiles.get(i).getX()*60-15 < x && x < (allTiles.get(i).getX() + allTiles.get(i).getWidth())*60+15 && allTiles.get(i).getY()*60-30 < y && y < allTiles.get(i).getY()*60){
+        for (TileBase tile : allTiles) {
+            if (tile.isCollider()) {
+                if (speed > 0) {
+                    if (tile.getX() * 60 - 15 < x && x < (tile.getX() + tile.getWidth()) * 60 + 15 && tile.getY() * 60 - 30 < y && y < tile.getY() * 60) {
                         return false;
                     }
-                }else{
-                    if (allTiles.get(i).getX()*60-15 < x && x < (allTiles.get(i).getX() + allTiles.get(i).getWidth())*60+15 && (allTiles.get(i).getY() + allTiles.get(i).getHeight())*60 < y && y < (allTiles.get(i).getY() + allTiles.get(i).getHeight())*60+30){
+                } else {
+                    if (tile.getX() * 60 - 15 < x && x < (tile.getX() + tile.getWidth()) * 60 + 15 && (tile.getY() + tile.getHeight()) * 60 < y && y < (tile.getY() + tile.getHeight()) * 60 + 30) {
                         return false;
                     }
                 }
