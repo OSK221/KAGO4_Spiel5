@@ -7,13 +7,16 @@ import my_project.model.maze.Tilemap;
 
 import java.awt.*;
 
-public class Enemy extends GraphicalObject {
+public abstract class Enemy extends GraphicalObject {
 
     private String name;
     private double x, y;
     private int lives, strength, speed;
-    private Player player;
+    protected Player player;
     private Color color;
+
+    protected boolean freeze;
+    protected double freezeTimer;
 
     private Tilemap tilemap;
 
@@ -36,16 +39,25 @@ public class Enemy extends GraphicalObject {
 
         double dist = Math.hypot(dx, dy);
 
-        if(dist < 55){
+        if(!freeze && dist < 55) {
             //Hit
+            freezeTimer = 0;
+            freeze = true;
+        }else if(freeze){
+            freezeTimer += dt;
+            if(freezeTimer > 1) freeze = false;
         }else {
-            if (true) {
-                dx = dx / dist;
-                dy = dy / dist;
+            dx = dx / dist;
+            dy = dy / dist;
 
+            if(tilemap != null) {
                 if (tilemap.isAbleToMoveHorizontal(x, y, dx * dt * speed)) x += dx * dt * speed;
                 if (tilemap.isAbleToMoveVertical(x, y, dy * dt * speed)) y += dy * dt * speed;
+            }else{ //Ein Vogel kennt keine Grenzen :)
+                x += dx * dt * speed;
+                y += dy * dt * speed;
             }
+
         }
     }
 
@@ -53,6 +65,11 @@ public class Enemy extends GraphicalObject {
     public void draw(DrawTool drawTool) {
         drawTool.setCurrentColor(color);
         drawTool.drawFilledCircle(x, y, 30);
+        drawTool.drawText(x-30,y-30,"" + lives);
+    }
+
+    public void hitEnemy(int damage){
+        lives -= damage;
     }
 
 }

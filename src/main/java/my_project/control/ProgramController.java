@@ -4,6 +4,8 @@ import KAGO_framework.control.ViewController;
 import my_project.model.Background;
 import my_project.model.enemy.Enemy;
 import my_project.model.Player;
+import my_project.model.enemy.Knight;
+import my_project.model.enemy.Skeleton;
 import my_project.model.maze.Tilemap;
 import my_project.view.InputManager;
 
@@ -14,23 +16,30 @@ public class ProgramController {
     private final ViewController viewController;
     private final InputManager inputManager;
 
-    private final Player player;
+    private final Tilemap tilemap = new Tilemap();
 
-    private final Tilemap tilemap;
+    private final Player player = new Player(300,450,tilemap);;
 
-    private final Enemy e01;
+    private final Enemy[] enemies =  new Enemy[]{
+            //Skeletons
+            new Skeleton("SK_TopLeft", -1110.0, 90.0, 5, 2, 20, player, tilemap),
+            new Skeleton("SK_TopRight", -90.0, 90.0, 5, 2, 20, player, tilemap),
+            new Skeleton("SK_BottomRight", -90.0, 810.0, 5, 2, 20, player, tilemap),
+            new Skeleton("SK_BottomLeft", -1110.0, 810.0, 5, 2, 20, player, tilemap),
+
+            //Test
+            new Knight("Test-Enemy",1400,-200,1,1,100,player, tilemap)
+
+    };
 
     public ProgramController(ViewController viewController){
-        tilemap = new Tilemap();
         viewController.draw(tilemap);
         tilemap.generateGrass(viewController);
-        player = new Player(300,450,tilemap);
         viewController.draw(player);
         viewController.register(player);
         inputManager = new InputManager(this,player);
         viewController.register(inputManager);
-        e01 = new Enemy("Test-Enemy",1400,-200,1,1,100,player, tilemap, Color.BLACK);
-        viewController.draw(e01);
+        for(Enemy en : enemies) viewController.draw(en);
         viewController.draw(new Background());
         this.viewController = viewController;
     }

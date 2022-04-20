@@ -82,6 +82,7 @@ public class Player extends InteractiveGraphicalObject {
         if(key == keyToGoRight){ direction = 'd'; }
         if(key == keyToGoDown) { direction = 's'; }
         if(key == keyToGoUp) { direction ='w'; }
+        if(key == KeyEvent.VK_P) { System.out.println("x: " + x + ", y: " + y); }
     }
 
     @Override
