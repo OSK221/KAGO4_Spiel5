@@ -7,18 +7,16 @@ import my_project.model.Player;
 import my_project.model.enemy.Knight;
 import my_project.model.enemy.Skeleton;
 import my_project.model.maze.Tilemap;
-import my_project.view.InputManager;
-
-import java.awt.*;
 
 public class ProgramController {
 
     private final ViewController viewController;
-    private final InputManager inputManager;
 
     private final Tilemap tilemap = new Tilemap();
 
-    private final Player player = new Player(300,450,tilemap);;
+    private final Player player = new Player(300,450,tilemap);
+
+    private final Camera camera = new Camera(player);
 
     private final Enemy[] enemies =  new Enemy[]{
             //Skeletons
@@ -37,8 +35,8 @@ public class ProgramController {
         tilemap.generateGrass(viewController);
         viewController.draw(player);
         viewController.register(player);
-        inputManager = new InputManager(this,player);
-        viewController.register(inputManager);
+        viewController.draw(camera);
+        viewController.register(camera);
         for(Enemy en : enemies) viewController.draw(en);
         viewController.draw(new Background());
         this.viewController = viewController;
