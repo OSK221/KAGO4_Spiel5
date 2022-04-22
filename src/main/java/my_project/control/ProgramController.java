@@ -2,6 +2,7 @@ package my_project.control;
 
 import KAGO_framework.control.ViewController;
 import my_project.model.Background;
+import my_project.model.DeathScreen;
 import my_project.model.enemy.Enemy;
 import my_project.model.Player;
 import my_project.model.enemy.Knight;
@@ -10,15 +11,17 @@ import my_project.model.maze.Tilemap;
 
 public class ProgramController {
 
-    private final ViewController viewController;
+    private ViewController viewController;
 
-    private final Tilemap tilemap = new Tilemap();
+    private DeathScreen deathScreen = new DeathScreen();
 
-    private final Player player = new Player(300,450,tilemap);
+    private Tilemap tilemap = new Tilemap();
 
-    private final Camera camera = new Camera(player);
+    private Player player = new Player(300,450,tilemap,3.0);
 
-    private final Enemy[] enemies =  new Enemy[]{
+    private Camera camera = new Camera(player);
+
+    private Enemy[] enemies =  new Enemy[]{
             //Skeletons
             new Skeleton("SK_TopLeft", -1110.0, 90.0, 5, 2, 20, player, tilemap),
             new Skeleton("SK_TopRight", -90.0, 90.0, 5, 2, 20, player, tilemap),
@@ -37,7 +40,10 @@ public class ProgramController {
         viewController.register(player);
         viewController.draw(camera);
         viewController.register(camera);
-        for(Enemy en : enemies) viewController.draw(en);
+        for (Enemy en : enemies) {
+            viewController.draw(en);
+            viewController.register(en);
+        }
         viewController.draw(new Background());
         this.viewController = viewController;
     }

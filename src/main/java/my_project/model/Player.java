@@ -18,26 +18,24 @@ public class Player extends InteractiveGraphicalObject {
 
     private double speed;
     private char direction;
-    private double damage;
-    private int level;
-    private int enemyTillNextLevel;
-    private double hp;
-    private double attackTimer;
-    private int money;
-    private double animationTimer;
+    private int damage, hp;
+    private double attackTimer, startAttackTimer;
+    private boolean boolAttackTimer;
 
-    private final int keyToGoLeft;
-    private final int keyToGoRight;
-    private final int keyToGoUp;
-    private final int keyToGoDown;
+    private final int keyToGoLeft, keyToGoRight, keyToGoUp, keyToGoDown;
 
-    public Player(double x, double y, Tilemap tilemap) {
+    public Player(double x, double y, Tilemap tilemap,double startAttackTimer) {
         this.x = x;
         this.y = y;
         load = false;
         speed = 200;
+        hp = 1;
+        damage = 1;
+        this.startAttackTimer = startAttackTimer;
+        attackTimer = startAttackTimer;
         width = 60;
         height = 60;
+        boolAttackTimer = false;
 
         this.tilemap = tilemap;
 
@@ -52,7 +50,9 @@ public class Player extends InteractiveGraphicalObject {
     public void draw(DrawTool drawTool) {
         drawTool.setCurrentColor(Color.RED);
         drawTool.drawFilledCircle(x, y, 30);
-        drawTool.drawText(x-30,y-30,"" + dtf);
+        drawTool.drawText(x - 30, y - 30, "" + hp);
+        drawTool.setCurrentColor(Color.GRAY);
+        drawTool.drawCircle(x, y, 70);
         if (!load) {
             this.drawTool = drawTool;
         }
@@ -61,19 +61,22 @@ public class Player extends InteractiveGraphicalObject {
     @Override
     public void update(double dt) {
         dtf = dt;
+
         if (direction == 'd') {
-            if (tilemap.isAbleToMoveHorizontal(x, y, 1)) x = x + speed*dt;
-            if (x >= 2400 - width) x = 2400-width;
+            if (tilemap.isAbleToMoveHorizontal(x, y, 1)) x = x + speed * dt;
+            if (x >= 2400 - width) x = 2400 - width;
         } else if (direction == 'a') {
-            if (tilemap.isAbleToMoveHorizontal(x, y, -1)) x = x - speed*dt;
+            if (tilemap.isAbleToMoveHorizontal(x, y, -1)) x = x - speed * dt;
             if (x <= -1200) x = -1200;
         } else if (direction == 's') {
-            if (tilemap.isAbleToMoveVertical(x, y, 1)) y = y + speed*dt;
+            if (tilemap.isAbleToMoveVertical(x, y, 1)) y = y + speed * dt;
             if (y >= 900) y = 900;
         } else if (direction == 'w') {
-            if (tilemap.isAbleToMoveVertical(x, y, -1)) y = y - speed*dt;
+            if (tilemap.isAbleToMoveVertical(x, y, -1)) y = y - speed * dt;
             if (y <= -900) y = -900;
         }
+
+        if (boolAttackTimer) attackTimer -= dt;
     }
 
     @Override
@@ -99,11 +102,14 @@ public class Player extends InteractiveGraphicalObject {
 
     public double getX() { return x; }
     public double getY() { return y; }
-    public double getSpeed() { return speed; }
+    public int getDamage() { return damage; }
+    public double getAttackTimer() { return attackTimer; }
+    public double getStartAttackTimer() { return startAttackTimer; }
+    public int getHp() { return hp; }
 
     public void setX(double newX){ x = newX; }
     public void setY(double newY) { y = newY; }
-    public void setSpeed(double newSpeed) { speed = newSpeed; }
+    public void setBoolAttackTimer(boolean nBoolAttackTimer) { boolAttackTimer = nBoolAttackTimer; }
+    public void setHp(int newHP) { hp = newHP; }
+    public void setAttackTimer(double newAttackTimer) { attackTimer = newAttackTimer; }
 }
-
-//alle Methoden die mit Kampf zu tun haben: Geld, Damage, Hp, etc.
