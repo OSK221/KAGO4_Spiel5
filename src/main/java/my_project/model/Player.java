@@ -29,7 +29,7 @@ public class Player extends InteractiveGraphicalObject {
         this.y = y;
         load = false;
         speed = 200;
-        hp = 1;
+        hp = 12;
         damage = 1;
         this.startAttackTimer = startAttackTimer;
         attackTimer = startAttackTimer;
@@ -107,6 +107,7 @@ public class Player extends InteractiveGraphicalObject {
     public double getStartAttackTimer() { return startAttackTimer; }
     public int getHp() { return hp; }
 
+    public void setStartAttackTimer(double st) {startAttackTimer = st;}
     public void setX(double newX){ x = newX; }
     public void setY(double newY) { y = newY; }
     public void setBoolAttackTimer(boolean nBoolAttackTimer) { boolAttackTimer = nBoolAttackTimer; }

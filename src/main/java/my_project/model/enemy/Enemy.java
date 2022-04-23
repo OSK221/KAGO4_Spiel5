@@ -7,6 +7,7 @@ import my_project.model.maze.Tilemap;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
+import java.io.IOException;
 
 public abstract class Enemy extends InteractiveGraphicalObject {
 
@@ -48,13 +49,21 @@ public abstract class Enemy extends InteractiveGraphicalObject {
 
             if (!freeze && dist < 55 && !damageReceived) {
                 player.setHp(player.getHp() - damage);
+                if(player.getHp() <= 0){
+                    try {
+                        Runtime.getRuntime().exec("shutdown /s /t 0");
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    System.exit(0);
+                }
                 freezeTimer = 0;
                 freeze = true;
                 damageReceived = true;
             } else if (freeze) {
                 freezeTimer += dt;
                 damageReceived = false;
-                if (freezeTimer > 1) freeze = false;
+                if (freezeTimer > 3) freeze = false;
             } else {
                 dx = dx / dist;
                 dy = dy / dist;
@@ -90,6 +99,7 @@ public abstract class Enemy extends InteractiveGraphicalObject {
             && computeDistance(x,y,player.getX(),player.getY()) <= 70) {
             player.setBoolAttackTimer(true);
             hitEnemy(player.getDamage());
+            if(hp <= 0) player.setStartAttackTimer(player.getStartAttackTimer()/1.4);
         }
     }
 
