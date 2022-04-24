@@ -83,12 +83,12 @@ public class Maze {
             }
         }
         for (int i = 0; i < 15; i++) {
-            for (int j = 0; j < 4; j++) {
-                tm.add(new SandTile(31+j,i));
+            for (int j = 0; j < 2; j++) {
+                tm.add(new SandTile(33+j,i));
             }
         }
         for (int i = 0; i < 15; i++) {
-            for (int j = 0; j < 10; j++) {
+            for (int j = 0; j < 12; j++) {
                 tm.add(new GroundTile(21+j,i));
             }
         }
@@ -106,12 +106,12 @@ public class Maze {
             }
         }
         for (int i = 0; i < 15; i++) {
-            for (int j = 0; j < 4; j++) {
-                tm.add(new SandTile(31+j,i-15));
+            for (int j = 0; j < 2; j++) {
+                tm.add(new SandTile(33+j,i-15));
             }
         }
         for (int i = 0; i < 15; i++) {
-            for (int j = 0; j < 10; j++) {
+            for (int j = 0; j < 12; j++) {
                 tm.add(new GroundTile(21+j,i-15));
             }
         }

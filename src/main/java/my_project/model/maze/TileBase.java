@@ -63,8 +63,6 @@ public class TileBase {
                 }
             }
         }
-        drawTool.setCurrentColor(255, 0, 255, 255);
-        drawTool.drawRectangle(x*60+2,y*60+2,width*60-4,height*60-4);
     }
 
     public void setWidth(double width) {
