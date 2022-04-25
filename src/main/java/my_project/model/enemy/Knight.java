@@ -7,7 +7,16 @@ import java.awt.*;
 
 public class Knight extends Enemy{
 
-    public Knight(String name, double x, double y, int lives, int strength, int speed, Player player, Tilemap tilemap) {
-        super(name, x, y, lives, strength, speed, player, tilemap, Color.GRAY);
+    public Knight(String name, double x, double y, Player player, Tilemap tilemap) {
+        super(name, x, y, 3, 2, 80, player, tilemap, Color.GRAY);
+    }
+
+    @Override
+    public void update(double dt) {
+        if(checkRange()) super.update(dt);
+    }
+
+    private boolean checkRange(){
+        return (super.player.getX() > 1275);
     }
 }

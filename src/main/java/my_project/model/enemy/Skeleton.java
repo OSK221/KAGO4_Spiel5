@@ -8,8 +8,8 @@ import java.awt.*;
 
 public class Skeleton extends Enemy{
 
-    public Skeleton(String name, double x, double y, int lives, int strength, int speed, Player player, Tilemap tilemap) {
-        super(name, x, y, lives, strength, speed, player, tilemap, Color.WHITE);
+    public Skeleton(String name, double x, double y, Player player, Tilemap tilemap) {
+        super(name, x, y, 5, 2, 20, player, tilemap, Color.WHITE);
     }
 
     @Override
